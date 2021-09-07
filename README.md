@@ -63,7 +63,7 @@ test_size
 
 Naive Bayes is a probabilistic classifier, meaning that for a document d, out of all classes c ∈ C the classifier returns the class cˆ which has the maximum posterior probability given the document.
 
-$$ \hat c = \underset{c \in C}{argmax} \text{ } P(c \mid d) $$
+<img src="images/1.PNG">
 
 so here the 
 <b>Posterior $P(c|d)$  </b>Probability is Probability of a word belonging to our recommended or not recommended class given the word.
@@ -71,40 +71,48 @@ with that we could set the (recommend OR not recommended) class for comments of 
 
 The intuition of Bayesian classification is to use Bayes’ rule , that is presented below:
 
-$$ P(x \mid y) = \frac{P(y \mid x) \, P(x)}{P(y)} $$
+<img src="images/2.PNG">
 
 it gives us a way to break down any conditional probability P(x|y) into three other probabilities.
 
 so here we have :
-$$ \hat c = \underset{c \in C}{argmax} \text{ } P(c \mid d) = {argmax} \text{ } \frac{P(d \mid c) \, P(c)}{P(d)} $$
+
+<img src="images/3.PNG">
 
 We can conveniently simplify it by dropping the denominator P(d). This is possible because we will be computing the equation for each possible class. But P(d) doesn’t change for each class; we are always asking about the most likely class for the same document d, which must have the same probability P(d). Thus, we can choose the class that maximizes this simpler formula:
-$$ \hat c = \underset{c \in C}{argmax} \text{ } P(c \mid d) = {argmax} \text{ } {P(d \mid c) \, P(c)} $$
+
+<img src="images/4.PNG">
 
 We thus compute the most probable class cˆ given some document d by choosing the class which has the highest product of two probabilities: the prior probability of the class P(c) and the likelihood of the document P(d|c):
 
-likelihood : $$ {P(d \mid c)} $$
+likelihood : 
 
-Prior : $$ P(c) $$
+<img src="images/5.PNG">
+
+Prior : 
+
+<img src="images/6.PNG">
 
 Without loss of generalization, we can represent a document d as a set of features f1, f2,..., fn:
-$$ \hat c = \underset{c \in C}{argmax} \text{ } {P(f_1,f_2, ... ,f_n \mid c) \, P(c)} $$
+
+<img src="images/7.PNG">
 
 this is still too hard to compute directly: without some simplifying assumptions, estimating the probability of every possible combination of
 features (for example, every possible set of words and positions) would require huge numbers of parameters and impossibly large training sets. Naive Bayes classifiers
 therefore make two simplifying assumptions:
 The first is the bag of words assumption , The second is commonly called the naive Bayes assumption: this is the conditional independence assumption that the probabilities P(fi|c) are independent given the class c and hence can be ‘naively’ multiplied as follows:
 
-$$ P(f_1,f_2,...,f_n \mid c) = P(f_1 \mid c) P(f_2 \mid c) ... P(f_n \mid c) $$
+<img src="images/8.PNG">
 
 The final equation for the class chosen by a naive Bayes classifier is thus:
 
 N : Naive Bayes
-$$ c_N = \underset{c \in C}{argmax} \text{ } P(c) \underset{f \in F} \prod P(f \mid c) $$
+
+<img src="images/9.PNG">
 
 To apply the naive Bayes classifier to text, we need to consider word positions, by simply walking an index through every word position in the document:
 
-$$ c_N = \underset{c \in C}{argmax} \text{ } P(c) \underset{i \in positions} \prod P(w_i \mid c) $$
+<img src="images/10.PNG">
 
 ```python
 import numpy as np
@@ -190,7 +198,8 @@ or tweets) our system labeled correctly. Although accuracy might seem a natural 
 the classes are unbalanced (as indeed they are with spam, which is a large majority of email, or with tweets, which are mainly not about pie).
 
 so we define accuracy as follows:
-$$  {Accuracy} \text{ } = \frac{{Correct Detected} \text{ } }{{Total} \text{ }} $$
+
+<img src="images/11.PNG">
 
 To make this more explicit, imagine that we looked at a million tweets, and let’s say that only 100 of them are discussing their love (or hatred) for our pie,
 while the other 999,900 are tweets about something completely unrelated. Imagine a simple classifier that stupidly classified every tweet as “not about pie”. This classifier would have 999,900 true negatives and only 100 false negatives for an accuracy of 999,900/1,000,000 or 99.99%! Surely we should be happy with this classifier? But of course this fabulous ‘no pie’ classifier would be completely useless, since it wouldn’t find a single one of the customer comments we are looking for. In other words, accuracy is not a good metric when the goal is to discover something that is rare, or at least not completely balanced in frequency, which is a very common situation in the world.
@@ -199,24 +208,26 @@ That’s why instead of accuracy we generally turn to two other metrics: precisi
 (i.e., the system labeled as positive) that are in fact positive (i.e., are positive according to the human gold labels). 
 
 Precision is defined as : 
-$$  {Precision} \text{ } = \frac{{Correct Detected Recommended} \text{ } }{{All Detected Recommended (Including Wrong Ones)} \text{ }} $$
+
+<img src="images/12.PNG">
 
 Recall measures the percentage of items actually present in the input that were correctly identified by the system. 
 
 Recall is defined as:
-$$  {Recall} \text{ } = \frac{{Correct Detected Recommended} \text{ } }{{Total Recommended} \text{ }} $$
+
+<img src="images/13.PNG">
 
 Precision and recall will help solve the problem with the useless “nothing is pie” classifier. This classifier, despite having a fabulous accuracy of 99.99%, has
 a terrible recall of 0 (since there are no true positives, and 100 false negatives, the recall is 0/100). You should convince yourself that the precision at finding relevant tweets is equally problematic. Thus precision and recall, unlike accuracy, emphasize true positives: finding the things that we are supposed to be looking for.
 
 There are many ways to define a single metric that incorporates aspects of both F-measure precision and recall. The simplest of these combinations is the F-measure.
 
-$$  F_1 = 2 \frac{{Precision*Recall} \text{ } }{{Precision+Recall} \text{ }} $$
+<img src="images/14.PNG">
 
 F-measure comes from a weighted harmonic mean of precision and recall. The
 harmonic mean of a set of numbers is the reciprocal of the arithmetic mean of reciprocals:
 
-$$  {HarmonicMean(a_1,a_2,a_3,...,a_n)} \text{ } = \frac{{n} \text{ } }{\frac{{1} \text{ } }{{a_1} \text{ }} + \frac{{1} \text{ } }{{a_2} \text{ }} + \frac{{1} \text{ } }{{a_3} \text{ }} + ... + \frac{{1} \text{ } }{{a_n} \text{ }} } $$
+<img src="images/15.PNG">
 
 Harmonic mean is used because it is a conservative metric; the harmonic mean of two values is closer to the minimum of the two values than the arithmetic mean is.
 Thus it weighs the lower of the two numbers more heavily.
@@ -266,7 +277,7 @@ Then we use the frequency of w_i
 in this concatenated document to give a maximum
 likelihood estimate of the probability:
 
-$$ \hat P(w_i \mid c) = \frac{{count} \text{ } \, (W_i,c)}{\underset{w \in V} \sum_ ccount(w,c) } $$
+<img src="images/16.PNG">
 
 Here the vocabulary V consists of the union of all the word types in all classes, not
 just the words in one class c.
@@ -277,7 +288,7 @@ suppose there are no training documents that both contain the word “fantastic�
 are classified as positive. Perhaps the word “fantastic” happens to occur in the class negative. In such a case the probability for this feature will be
 zero:
 
-$$ \hat P(fantastic \mid positive) = \frac{{count(fantastic , positive)} \text{ } }{\underset{w \in V} \sum_ ccount(w,positive) } = 0 $$
+<img src="images/17.PNG">
 
 But since naive Bayes naively multiplies all the feature likelihoods together, zero
 probabilities in the likelihood term for any class will cause the probability of the
