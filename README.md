@@ -1,6 +1,6 @@
-<img src="Images/1200px-University_of_Tehran_logo.svg.png" width="100" align="left"/>
+<img src="images/1200px-University_of_Tehran_logo.svg.png" width="100" align="left"/>
 
-<img src="Images/fanni.png" width="100" align="right"/>
+<img src="images/fanni.png" width="100" align="right"/>
 
 
 <h1 style="float:center;" align="center">Naive Bayes And Sentiment Classification</h1>
@@ -42,7 +42,7 @@ with open("./CA3_dataset/comment_train.csv", encoding="utf8") as csvfile:
 data_size
 ```
 
-<img src="Images/o1.PNG">
+<img src="images/o1.PNG">
 
 ```python
 test_set = list()
@@ -59,7 +59,7 @@ with open("./CA3_dataset/comment_test.csv", encoding="utf8") as csvfile:
 test_size
 ```
 
-<img src="Images/o2.PNG">
+<img src="images/o2.PNG">
 
 Naive Bayes is a probabilistic classifier, meaning that for a document d, out of all classes c ∈ C the classifier returns the class cˆ which has the maximum posterior probability given the document.
 
@@ -252,7 +252,7 @@ print("Recall:", Recall)
 print("Precision:", Precision)
 print("F1:", F1)
 ```
-<img src="Images/o3.PNG">
+<img src="images/o3.PNG">
 
 # Additive Smoothing (Laplace) smoothing
 
@@ -373,7 +373,7 @@ print("F1:", F1)
 
 ```
 
-<img src="Images/o4.PNG">
+<img src="images/o4.PNG">
 
 ```python
 import matplotlib.pyplot as plt
@@ -398,6 +398,6 @@ plt.legend(loc="upper left")
 plt.show()
 ```
 
-<img src="Images/o5.PNG">
+<img src="images/o5.PNG">
 
 
