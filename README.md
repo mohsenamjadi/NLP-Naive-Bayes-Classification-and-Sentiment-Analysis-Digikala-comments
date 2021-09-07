@@ -108,11 +108,11 @@ The final equation for the class chosen by a naive Bayes classifier is thus:
 
 N : Naive Bayes
 
-<img src="images/9.PNG">
+<img src="images/18.PNG">
 
 To apply the naive Bayes classifier to text, we need to consider word positions, by simply walking an index through every word position in the document:
 
-<img src="images/10.PNG">
+<img src="images/9.PNG">
 
 ```python
 import numpy as np
@@ -199,7 +199,7 @@ the classes are unbalanced (as indeed they are with spam, which is a large major
 
 so we define accuracy as follows:
 
-<img src="images/11.PNG">
+<img src="images/10.PNG">
 
 To make this more explicit, imagine that we looked at a million tweets, and let’s say that only 100 of them are discussing their love (or hatred) for our pie,
 while the other 999,900 are tweets about something completely unrelated. Imagine a simple classifier that stupidly classified every tweet as “not about pie”. This classifier would have 999,900 true negatives and only 100 false negatives for an accuracy of 999,900/1,000,000 or 99.99%! Surely we should be happy with this classifier? But of course this fabulous ‘no pie’ classifier would be completely useless, since it wouldn’t find a single one of the customer comments we are looking for. In other words, accuracy is not a good metric when the goal is to discover something that is rare, or at least not completely balanced in frequency, which is a very common situation in the world.
@@ -209,25 +209,25 @@ That’s why instead of accuracy we generally turn to two other metrics: precisi
 
 Precision is defined as : 
 
-<img src="images/12.PNG">
+<img src="images/11.PNG">
 
 Recall measures the percentage of items actually present in the input that were correctly identified by the system. 
 
 Recall is defined as:
 
-<img src="images/13.PNG">
+<img src="images/12.PNG">
 
 Precision and recall will help solve the problem with the useless “nothing is pie” classifier. This classifier, despite having a fabulous accuracy of 99.99%, has
 a terrible recall of 0 (since there are no true positives, and 100 false negatives, the recall is 0/100). You should convince yourself that the precision at finding relevant tweets is equally problematic. Thus precision and recall, unlike accuracy, emphasize true positives: finding the things that we are supposed to be looking for.
 
 There are many ways to define a single metric that incorporates aspects of both F-measure precision and recall. The simplest of these combinations is the F-measure.
 
-<img src="images/14.PNG">
+<img src="images/13.PNG">
 
 F-measure comes from a weighted harmonic mean of precision and recall. The
 harmonic mean of a set of numbers is the reciprocal of the arithmetic mean of reciprocals:
 
-<img src="images/15.PNG">
+<img src="images/14.PNG">
 
 Harmonic mean is used because it is a conservative metric; the harmonic mean of two values is closer to the minimum of the two values than the arithmetic mean is.
 Thus it weighs the lower of the two numbers more heavily.
@@ -277,7 +277,7 @@ Then we use the frequency of w_i
 in this concatenated document to give a maximum
 likelihood estimate of the probability:
 
-<img src="images/16.PNG">
+<img src="images/15.PNG">
 
 Here the vocabulary V consists of the union of all the word types in all classes, not
 just the words in one class c.
@@ -288,7 +288,7 @@ suppose there are no training documents that both contain the word “fantastic�
 are classified as positive. Perhaps the word “fantastic” happens to occur in the class negative. In such a case the probability for this feature will be
 zero:
 
-<img src="images/17.PNG">
+<img src="images/16.PNG">
 
 But since naive Bayes naively multiplies all the feature likelihoods together, zero
 probabilities in the likelihood term for any class will cause the probability of the
@@ -296,7 +296,7 @@ class to be zero, no matter the other evidence!
 
 The simplest solution is the add-one (Laplace) smoothing. 
 
-$$ \hat P(w_i \mid c) = \frac{{count(w_i,c) + 1} \text{ }}{\underset{w \in V} \sum_ (count(w,c) + 1) } = \frac{{count(w_i,c) + 1} \text{ }}{\underset{w \in V} (\sum_ count(w,c)) +  |V| } $$
+<img src="images/17.PNG">
 
 Note once again that it is crucial that the vocabulary V consists of the union of all the
 word types in all classes, not just the words in one class c.
